@@ -17,26 +17,29 @@ import java.util.UUID;
 @Table(name = "bookings")
 public class Booking {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.UUID)
     @Setter(AccessLevel.NONE)
     @Column(name = "booking_id")
     private UUID bookingId;
-    @Column(name = "request_date", nullable = false)
-    private LocalDate requestDate;
+    @Column(name = "booking_date", nullable = false)
+    private LocalDate bookingDate;
     @Column(nullable = false)
     private String preferences;
+
     @OneToOne
     @JoinColumn(name = "trip_id", nullable = false)
     @Setter(AccessLevel.NONE)
     private Trip trip;
+
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public Booking(Trip trip, Employee employee) {
+    public Booking(Trip trip, Employee employee, String preferences) {
         this.trip = trip;
         this.employee = employee;
-        this.requestDate = LocalDate.now();
+        this.bookingDate = LocalDate.now();
+        this.preferences = preferences;
     }
 
     @Override
@@ -45,6 +48,6 @@ public class Booking {
                 " = (" + trip +
                 "), (" + employee +
                 "), preferences: " + (preferences == null ? "N/A" : preferences) +
-                ", requestDate: " + requestDate;
+                ", bookingDate: " + bookingDate;
     }
 }

@@ -26,6 +26,7 @@ public class Employee {
     private String username, name, surname, email;
     @Column(name = "avatar_url", nullable = false)
     private String avatarUrl;
+
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     @Setter(AccessLevel.NONE)
     @JsonIgnore

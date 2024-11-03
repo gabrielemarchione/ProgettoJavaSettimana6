@@ -28,20 +28,20 @@ public class EmployeeService {
         return this.employeeRepository.save(newEmployee);
     }
     public Employee findByIdAndUpdate(UUID employeeId, EmployeeDTO payload) {
-        Employee Employee = this.findById(employeeId);
-        if (!Employee.getEmail().equals(payload.email())) {
+        Employee employee = this.findById(employeeId);
+        if (!employee.getEmail().equals(payload.email())) {
             if (this.employeeRepository.existsByEmail(payload.email()))
                 throw new BadRequestException("La mail è già in uso");
         }
-        Employee.setUsername(payload.username());
-        Employee.setName(payload.name());
-        Employee.setSurname(payload.surname());
-        Employee.setEmail(payload.email());
-        return this.employeeRepository.save(Employee);
+        employee.setUsername(payload.username());
+        employee.setName(payload.name());
+        employee.setSurname(payload.surname());
+        employee.setEmail(payload.email());
+        return this.employeeRepository.save(employee);
     }
     public void deleteEmployee(UUID employeeId) {
-        Employee Employee = this.findById(employeeId);
-        this.employeeRepository.delete(Employee);
+        Employee employee = this.findById(employeeId);
+        this.employeeRepository.delete(employee);
     }
     public List<Booking> findBookingsByEmployeeId(UUID employeeId) {
         Employee employee = this.findById(employeeId);

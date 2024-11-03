@@ -51,5 +51,11 @@ public class BookingService {
         Booking booking = findById(bookingId);
         bookingRepository.delete(booking);
     }
+    public Booking findByIdAndUpdate(UUID employeeId, BookingDTO payload, UUID bookingId) {
+        Employee employee = this.employeeService.findById(employeeId);
+        Booking booking = this.findById(bookingId);
+        booking.setPreferences(payload.preferences());
+        return this.bookingRepository.save(booking);
+    }
 }
 

@@ -6,7 +6,6 @@ import gabrielemarchione.progettoJavaSettimana6.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +41,7 @@ public class BookingController {
     @ResponseStatus(HttpStatus.CREATED)
     public Booking saveBooking(
             @PathVariable UUID employeeId,
-            @RequestBody @Validated BookingDTO payload,
-            BindingResult bindingResult
+            @RequestBody @Validated BookingDTO payload
     ) {
         return this.bookingService.saveBooking(payload, employeeId);
     }

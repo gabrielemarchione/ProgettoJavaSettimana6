@@ -9,6 +9,7 @@ import gabrielemarchione.progettoJavaSettimana6.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -62,5 +63,11 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public Booking putBooking(@PathVariable UUID employeeId, @RequestBody BookingDTO payload, @PathVariable UUID bookingId) {
         return this.bookingService.findByIdAndUpdate(employeeId, payload, bookingId);
+    }
+
+    @PatchMapping("/{employeeId}/avatar")
+    @ResponseStatus(HttpStatus.OK)
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @PathVariable UUID employeeId) {
+        return this.employeeService.updateAvatar(file, employeeId);
     }
 }

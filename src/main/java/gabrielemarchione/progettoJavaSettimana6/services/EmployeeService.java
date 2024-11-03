@@ -1,5 +1,7 @@
 package gabrielemarchione.progettoJavaSettimana6.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import gabrielemarchione.progettoJavaSettimana6.dto.EmployeeDTO;
 import gabrielemarchione.progettoJavaSettimana6.entities.Booking;
 import gabrielemarchione.progettoJavaSettimana6.entities.Employee;
@@ -8,12 +10,17 @@ import gabrielemarchione.progettoJavaSettimana6.exceptions.NotFoundException;
 import gabrielemarchione.progettoJavaSettimana6.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 @Service
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private Cloudinary cloudinaryUploader;
 
     public List<Employee> findAll() {
         return this.employeeRepository.findAll();
@@ -46,5 +53,17 @@ public class EmployeeService {
     public List<Booking> findBookingsByEmployeeId(UUID employeeId) {
         Employee employee = this.findById(employeeId);
         return employee.getBookingList();
+    }
+    public String updateAvatar(MultipartFile file, UUID employeeId) {
+        Employee employee = this.findById(employeeId);
+        String url = null;
+        try {
+            url = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        } catch (IOException e) {
+            throw new BadRequestException("Ci sono stati problemi con l'upload dell'avatar");
+        }
+        employee.setAvatarUrl(url);
+        this.employeeRepository.save(employee);
+        return url;
     }
 }

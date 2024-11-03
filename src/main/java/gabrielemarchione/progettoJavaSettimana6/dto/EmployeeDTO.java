@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record EmployeeDTO(
-        @NotEmpty(message = "Username è obbligatorio")
+                          @NotEmpty(message = "Username è obbligatorio")
                           @Size(min = 4, max = 16, message = "Username deve contenere da 4 a 16 caratteri")
                           String username,
                           @NotEmpty(message = "Il nome è obbligatorio!")

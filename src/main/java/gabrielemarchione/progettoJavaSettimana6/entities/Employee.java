@@ -23,7 +23,7 @@ public class Employee {
     @Setter(AccessLevel.NONE)
     private UUID employeeId;
     @Column(nullable = false)
-    private String username, name, surname, email;
+    private String  name, surname, email, username;
     @Column(name = "avatar_url", nullable = false)
     private String avatarUrl;
 
@@ -32,20 +32,20 @@ public class Employee {
     @JsonIgnore
     private List<Booking> bookingList;
 
-    public Employee(String username, String name, String surname, String email) {
-        this.username = username;
+    public Employee( String name, String surname, String email, String username) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.username = username;
         this.avatarUrl = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
     }
 
     @Override
     public String toString() {
         return "Employee " + employeeId +
-                " = name: " + name +
+                ", name: " + name +
                 ", surname: " + surname +
-                ", username: " + username +
-                ", email: " + email;
+                ", email: " +email +
+                " = username: " + username;
     }
 }
